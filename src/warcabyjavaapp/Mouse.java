@@ -19,12 +19,12 @@ public class Mouse implements MouseListener {
     }
     
     int x1=-1,y1=-1,i,j;
-    int kolorInt;
+//    int kolorInt;
     
     Plansza p1 = new Plansza();
     Gra gra = new Gra();
     WarcabyJavaAPP panel;
-    int[][] kolor = p1.Pole();
+//    int[][] kolor = p1.Pole();
     
     boolean pierwszyGracz = true;
     
@@ -58,21 +58,28 @@ public class Mouse implements MouseListener {
             int x2=i;
             int y2=j;
             
-
             boolean sukces = gra.wykonajRuch(x1, y1, x2, y2, pierwszyGracz);
-            zmianaTury();
             
             if(!sukces){
-                System.out.println(sukces);
                 System.out.println("Nieprawidlowy ruch");
             }
-            
+            else{
+                zmianaTury();
+            }
+            int pozostaleCzerwone = gra.ilePionkow(22);
+            int pozostaleZolte = gra.ilePionkow(11);
+            if(pozostaleCzerwone==0){
+                System.out.println("Wygrywa gracz Zolty");
+            }
+            if(pozostaleZolte==0){
+                System.out.println("Wygrywa gracz Czerwony");
+            }
             panel.repaint();
             
             
 
-            System.out.println("Start: " + x1 + "," + y1 + " -> Cel: " + i + "," + j);
-            System.out.println("Pionek: " + gra.plansza[y1][x1] + " | Cel: " + gra.plansza[y2][x2]);
+//            System.out.println("Start: " + x1 + "," + y1 + " -> Cel: " + i + "," + j);
+//            System.out.println("Pionek: " + gra.plansza[y1][x1] + " | Cel: " + gra.plansza[y2][x2]);
             System.out.println(pierwszyGracz? "Player 1's Turn (zolty)" : "Player 2's Turn (czerwony)");
             
             x1=-1;

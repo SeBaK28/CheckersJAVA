@@ -21,22 +21,23 @@ public class WarcabyJavaAPP extends JPanel{
         WarcabyJavaAPP panel = new WarcabyJavaAPP(gra);
         okno.add(panel);
         okno.pack();
-        okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
         okno.setVisible(true);
+        okno.setResizable(false);
     }
     
     public Gra gra;
     
     public WarcabyJavaAPP(Gra gra){
         this.gra = gra;
-        this.setPreferredSize(new Dimension(450,450));
+        this.setPreferredSize(new Dimension(450,600));
         this.addMouseListener(new Mouse(gra,this));
     }
     
      public void paintComponent(Graphics g){
         super.paintComponent(g);        
         
-        setBackground(Color.BLACK);
+        setBackground(Color.GRAY);
         
         //Plansza
         for(int i =0; i<8;i++){

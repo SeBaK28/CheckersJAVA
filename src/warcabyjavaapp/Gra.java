@@ -44,7 +44,7 @@ public class Gra {
         }
     }
 
-        public boolean wykonajRuch(int x1, int y1, int x2, int y2,boolean pionekNr) {
+    public boolean wykonajRuch(int x1, int y1, int x2, int y2,boolean twojRuch) {
         // Sprawdź, czy współrzędne są w zakresie
         if (!czyWZakresie(x1, y1) || !czyWZakresie(x2, y2)) return false;
 
@@ -57,21 +57,45 @@ public class Gra {
 
         // Sprawdź, czy ruch jest ukośny o jedno pole
         int dx = Math.abs(x2 - x1);
-        int dy = y2 - y1;
+        int dy = Math.abs(y2 - y1);
 
-        if (dx == 1 && ((pionek == 11 && dy == 1 && pionekNr==true) || (pionek == 22 && dy == -1 && pionekNr==false))) {
+        if (dx == 1 && ((pionek == 11 && dy == 1 && twojRuch==true) || (pionek == 22 && dy == 1 && twojRuch==false))) {
             // Ruch prosty
             plansza[y2][x2] = pionek;
             plansza[y1][x1] = 0;
             return true;
         }  
         if (Math.abs(dx) == 2 && Math.abs(dy) == 2) {
-            int xSrodek = x1 + dx / 2;
-            int ySrodek = y1 + dy / 2;
+            int xSrodek=0;
+            int ySrodek=0;
+            //czerwony na prawy gore
+            if((x1<x2) && (y1>y2)){
+                xSrodek = x1 + dx/2;
+                ySrodek = y1 - dy/2; 
+//                System.out.println(1);
+            }            
+            //zolty na prawy dol
+            if((x1<x2)&&(y1<y2)){
+                xSrodek = x1 + dx/2;
+                ySrodek = y1 + dy/2; 
+//                System.out.println(2);
+            }            
+            //zolty na lewy dol
+            if((x1>x2)&&(y1<y2)){
+                xSrodek = x1 - dx/2;
+                ySrodek = y1 + dy/2;    
+//                System.out.println(3);
+            }             
+            //czerwony na lewa gore
+            if((x1>x2)&&(y1>y2)){
+                xSrodek = x1 - dx/2;
+                ySrodek = y1 - dy/2;
+//                System.out.println(4);
+            }            
             int pionekSrodek = plansza[ySrodek][xSrodek];
 
             // Sprawdź, czy w środku jest pionek przeciwnika
-            if ((pionek == 11 && pionekSrodek == 22 && pionekNr) || (pionek == 22 && pionekSrodek == 11 && !pionekNr)) {
+            if ((pionek == 11 && pionekSrodek == 22 && twojRuch) || (pionek == 22 && pionekSrodek == 11 && !twojRuch)) {
                 plansza[y2][x2] = pionek;
                 plansza[y1][x1] = 0;
                 plansza[ySrodek][xSrodek] = 0; // usuń zbitego pionka
@@ -81,7 +105,18 @@ public class Gra {
         return false;
     }
         
+    public int ilePionkow(int kolor){
+        int liczba=0;
 
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if(plansza[i][j] == kolor){
+                    liczba++;
+                }
+            }
+        }
+        return liczba;
+    }
     
         
     private boolean czyWZakresie(int x, int y) {
