@@ -6,6 +6,7 @@ package warcabyjavaapp;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Set;
 import javax.swing.*;
 
 /**
@@ -27,13 +28,17 @@ public class WarcabyJavaAPP extends JPanel{
     }
     
     public Gra gra;
+    int wys = 450;
+    int szer = 600;
     
     public WarcabyJavaAPP(Gra gra){
         this.gra = gra;
-        this.setPreferredSize(new Dimension(450,600));
+        this.setPreferredSize(new Dimension(wys,szer));
         this.addMouseListener(new Mouse(gra,this));
     }
     
+    
+    @Override
      public void paintComponent(Graphics g){
         super.paintComponent(g);        
         
@@ -71,7 +76,38 @@ public class WarcabyJavaAPP extends JPanel{
                     g.fillOval(5 + (i * 50), 5 + (j * 50), 40, 40);
                 }
             }
-        }      
+        } 
+        
+        for(int i = 0; i < 8; i++)
+        {
+            for(int j = 0; j < 8; j++)
+            {
+                if(temp[j][i] == 222)
+                {
+                    g.setColor(Color.red);
+                    g.fillOval(5 + (i * 50), 5 + (j * 50), 40, 40); 
+                    g.setColor(Color.WHITE);
+                    g.fillOval(5 + (i * 50), 5 + (j * 50), 20, 20); 
+                }
+                else if(temp[j][i] == 111)
+                {                                        
+                    g.setColor(Color.YELLOW);                   
+                    g.fillOval(5 + (i * 50), 5 + (j * 50), 40, 40);
+                    g.setColor(Color.BLACK);
+                    g.fillOval(5 + (i * 50), 5 + (j * 50), 20, 20); 
+                }
+            }
+        } 
+        
+        
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        String kolej ="Kolej: " + (gra.pierwszyGracz? "Zolty": "Czerwony");        
+        if(!gra.wygranyKolor().isEmpty()){
+            kolej = "Wygrywa" + gra.wygranyKolor();
+        }
+        g.setColor(Color.BLACK);
+        g.drawString(kolej, szer/4, 420);
+        g.drawString(gra.informacja, (szer/4)-gra.informacja.length(), 440);
      }
 }
      

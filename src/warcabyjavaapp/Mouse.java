@@ -26,64 +26,68 @@ public class Mouse implements MouseListener {
     WarcabyJavaAPP panel;
 //    int[][] kolor = p1.Pole();
     
-    boolean pierwszyGracz = true;
-    
-    void zmianaTury(){
-        pierwszyGracz = !pierwszyGracz;
+    public void PozycjaWybrana(int liczbaX, int liczbaY){
+        gra.informacja = "Wybrano: "+liczbaX+ ", "+liczbaY;
     }
+    
     
     
     @Override
     public void mouseClicked(MouseEvent e) {
         int wartoscX=e.getX(); //-8
-        int wartoscY=e.getY(); //-30
-        System.out.println(wartoscX + ", " + wartoscY);        
+        int wartoscY=e.getY(); //-30        
+        PozycjaWybrana(wartoscX,wartoscY);
+        panel.repaint();
+        System.out.println(wartoscX + ", "+wartoscY );
         
         i=wartoscX/50;
-        j=wartoscY/50;
+        j=wartoscY/50;                
         
         
         
         if(x1==-1 || y1==-1){
             x1=i;
-            y1=j;
+            y1=j;            
         }else{
             if(x1 == i && y1 ==j){
+                gra.informacja = "Wybrano to samo pole, wybierz jeszcze raz";
                 System.out.println("Wybrano to samo pole");
                 x1=-1;
                 y1=-1;
-                return;
+                panel.repaint();
+                return;                                
             }
             
             int x2=i;
             int y2=j;
             
-            boolean sukces = gra.wykonajRuch(x1, y1, x2, y2, pierwszyGracz);
+            boolean sukces = gra.wykonajRuch(x1, y1, x2, y2, gra.pierwszyGracz);
             
             if(!sukces){
-                System.out.println("Nieprawidlowy ruch");
+                gra.informacja ="Nieprawidlowy ruch, wybierz jeszcze raz";
             }
             else{
-                zmianaTury();
+                gra.zmianaTury();
             }
-            int pozostaleCzerwone = gra.ilePionkow(22);
-            int pozostaleZolte = gra.ilePionkow(11);
-            if(pozostaleCzerwone==0){
-                System.out.println("Wygrywa gracz Zolty");
-            }
-            if(pozostaleZolte==0){
-                System.out.println("Wygrywa gracz Czerwony");
-            }
+//            int pozostaleCzerwone = gra.ilePionkow(22);
+//            int pozostaleZolte = gra.ilePionkow(11);
+//            if(pozostaleCzerwone==0){
+//                System.out.println("Wygrywa gracz Zolty");
+//            }
+//            if(pozostaleZolte==0){
+//                System.out.println("Wygrywa gracz Czerwony");
+//            }
             panel.repaint();
             
             
 
 //            System.out.println("Start: " + x1 + "," + y1 + " -> Cel: " + i + "," + j);
 //            System.out.println("Pionek: " + gra.plansza[y1][x1] + " | Cel: " + gra.plansza[y2][x2]);
-            System.out.println(pierwszyGracz? "Player 1's Turn (zolty)" : "Player 2's Turn (czerwony)");
+            System.out.println(gra.pierwszyGracz? "Player 1's Turn (zolty)" : "Player 2's Turn (czerwony)");
             
             x1=-1;
             y1=-1;
+
         }       
     }
 
