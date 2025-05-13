@@ -77,11 +77,11 @@ public class Gra {
 
         // Sprawdź, czy ruch jest ukośny
         int dx = Math.abs(x2 - x1);
-//        int dy = y2-y1;
-        int dy = Math.abs(y2 - y1);       
+        int iy = y2-y1;
+        int dy = Math.abs(iy);       
                         
         
-        if (dx == 1 && ((pionek == 11 && twojRuch) || (pionek == 22  && !twojRuch))) {            
+        if (dx == 1 && ((pionek == 11 && iy==1 &&twojRuch) || (pionek == 22&& iy==-1  && !twojRuch))) {            
             plansza[y2][x2] = pionek;
             plansza[y1][x1] = 0;
             promujDoKrola(x2, y2, pionek);
@@ -91,47 +91,50 @@ public class Gra {
         if (Math.abs(dx) == 2 && Math.abs(dy) == 2) {
             int xSrodek=0;
             int ySrodek=0;
-            //czerwony na prawy gore
-            if((x1<x2) && (y1>y2) ){
-                xSrodek = x1 + dx/2;
-                ySrodek = y1 - dy/2; 
-                promujDoKrola(x2, y2, pionek);
-                System.out.println(2);
-//                System.out.println(1);
-            }            
-            //zolty na prawy dol
-            if((x1<x2)&&(y1<y2)){
-                xSrodek = x1 + dx/2;
-                ySrodek = y1 + dy/2; 
-                promujDoKrola(x2, y2, pionek);
-                System.out.println(3);
-            }            
-            //zolty na lewy dol
-            if((x1>x2)&&(y1<y2)){
-                xSrodek = x1 - dx/2;
-                ySrodek = y1 + dy/2; 
-                promujDoKrola(x2, y2, pionek);
-                System.out.println(4);
-            }             
-            //czerwony na lewa gore
-            if((x1>x2)&&(y1>y2)){
-                xSrodek = x1 - dx/2;
-                ySrodek = y1 - dy/2;
-                promujDoKrola(x2, y2, pionek);
-                System.out.println(5);
-            }            
-            int pionekSrodek = plansza[ySrodek][xSrodek];
-           
+            if((iy==-2 && pionek==22)||iy==2 && pionek ==11){
+                //czerwony na prawy gore
+                if((x1<x2) && (y1>y2) ){
+                    xSrodek = x1 + dx/2;
+                    ySrodek = y1 - dy/2; 
+                    promujDoKrola(x2, y2, pionek);
+                    System.out.println(2);
+    //                System.out.println(1);
+                }            
+                //zolty na prawy dol
+                if((x1<x2)&&(y1<y2)){
+                    xSrodek = x1 + dx/2;
+                    ySrodek = y1 + dy/2; 
+                    promujDoKrola(x2, y2, pionek);
+                    System.out.println(3);
+                }            
+                //zolty na lewy dol
+                if((x1>x2)&&(y1<y2)){
+                    xSrodek = x1 - dx/2;
+                    ySrodek = y1 + dy/2; 
+                    promujDoKrola(x2, y2, pionek);
+                    System.out.println(4);
+                }             
+                //czerwony na lewa gore
+                if((x1>x2)&&(y1>y2)){
+                    xSrodek = x1 - dx/2;
+                    ySrodek = y1 - dy/2;
+                    promujDoKrola(x2, y2, pionek);
+                    System.out.println(5);
+                }            
+                int pionekSrodek = plansza[ySrodek][xSrodek];
 
-            // Sprawdź, czy w środku jest pionek przeciwnika
-            if ((pionek == 11 && pionekSrodek == 22 && twojRuch) || (pionek == 22 && pionekSrodek == 11 && !twojRuch)) {
-                plansza[y2][x2] = pionek;
-                plansza[y1][x1] = 0;
-                plansza[ySrodek][xSrodek] = 0; // usuń zbitego pionka
-                promujDoKrola(x2, y2, pionek);
-                System.out.println(6);
-                return true;
+
+                // Sprawdź, czy w środku jest pionek przeciwnika
+                if ((pionek == 11 && pionekSrodek == 22 && twojRuch) || (pionek == 22 && pionekSrodek == 11 && !twojRuch)) {
+                    plansza[y2][x2] = pionek;
+                    plansza[y1][x1] = 0;
+                    plansza[ySrodek][xSrodek] = 0; // usuń zbitego pionka
+                    promujDoKrola(x2, y2, pionek);
+                    System.out.println(6);
+                    return true;
+                }
             }
+            
         }
         if((pionek == 111 && twojRuch) || (pionek == 222 && !twojRuch)){
             int dX = x2-x1;
